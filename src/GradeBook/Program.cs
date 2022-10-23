@@ -19,8 +19,22 @@ namespace GradeBook
                 {
                     break;
                 }
-                var grade = double.Parse(input);
-                book.AddGrade(grade);
+
+                try
+                {
+                
+                    var grade = double.Parse(input);
+                    book.AddGrade(grade);
+                
+                }
+                catch(ArgumentException ex)
+                {
+                    WriteLine(ex.Message);
+                }
+                catch(FormatException ex)
+                {
+                    WriteLine(ex.Message);
+                }
             }
             var stats = book.GetStatistics();
 
