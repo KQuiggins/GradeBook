@@ -25,6 +25,7 @@ namespace GradeBook
                 
                     var grade = double.Parse(input);
                     book.AddGrade(grade);
+                    
                 
                 }
                 catch(ArgumentException ex)
@@ -38,6 +39,8 @@ namespace GradeBook
             }
             var stats = book.GetStatistics();
 
+            WriteLine(Book.CATEGORY);
+            WriteLine($"For the book named {book.Name}");
             WriteLine($"The average grade is {stats.Average:N1}");
             WriteLine($"The lowest grade is {stats.Low}");
             WriteLine($"The highest grade is {stats.High}");

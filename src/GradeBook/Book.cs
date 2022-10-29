@@ -7,8 +7,31 @@ namespace GradeBook
 
         public Book(string name)
         {
+            
+            
             grades = new List<double>();
             Name = name;
+        }
+
+        
+
+        public void AddGrade(char letter)
+        {
+            switch(letter)
+            {
+                case 'A':
+                    AddGrade(90);
+                    break;
+                case 'B':
+                    AddGrade(80);
+                    break;
+                case 'C':
+                    AddGrade(70);
+                    break;
+                default:
+                    AddGrade(0);
+                    break;
+            }
         }
         
         
@@ -75,7 +98,15 @@ namespace GradeBook
             return result;
 
         }
-        public string Name;
+        
         private List<double> grades;
+
+        public string Name
+        {
+            get;
+            private set;
+        }
+
+        public const string CATEGORY = "Science";
     }
 }
