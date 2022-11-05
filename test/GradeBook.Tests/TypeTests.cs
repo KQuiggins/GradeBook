@@ -4,31 +4,42 @@ public delegate string WriteLogDelegate(string logMessage);
 
 public class TypeTests
 {
-    
+    int count = 0;
+
     [Fact]
     public void WriteLogDelegateCanPointToMethod()
     {
-        WriteLogDelegate log;
+        WriteLogDelegate log = ReturnMessage;
 
-        log = new WriteLogDelegate(ReturnMessage);
-        // Shorthand: log = ReturnMessage;
+        // log = new WriteLogDelegate(ReturnMessage);
+        log += ReturnMessage; // Shorthand for above
+        log += IncrementCount;
 
         var result = log("Hello!");
-        Assert.Equal("Hello!", result);
+        Assert.Equal(3, count);
+
+    }
+
+
+    string IncrementCount(string message)
+    {
+        count++;
+        return message.ToLower();
     }
 
     string ReturnMessage(string message)
     {
+        count++;
         return message;
     }
-    
-    
+
+
     [Fact]
     public void Test1()
     {
         var x = GetInt();
         SetInt(ref x);
-        
+
         Assert.Equal(42, x);
     }
 
@@ -49,15 +60,15 @@ public class TypeTests
         GetBookSetName(ref book1, "New Name");
 
         Assert.Equal("New Name", book1.Name);
-        
+
     }
 
-    private void GetBookSetName (ref Book book, string name)
+    private void GetBookSetName(ref InMemoryBook book, string name)
     {
-       book = new Book(name);
+        book = new InMemoryBook(name);
     }
-    
-    
+
+
     [Fact]
     public void CSharpIsPassByValue()
     {
@@ -65,12 +76,12 @@ public class TypeTests
         GetBookSetName(book1, "New Name");
 
         Assert.Equal("Book 1", book1.Name);
-        
+
     }
 
-    private void GetBookSetName(Book book, string name)
+    private void GetBookSetName(InMemoryBook book, string name)
     {
-       book = new Book(name);
+        book = new InMemoryBook(name);
     }
 
     [Fact]
@@ -80,12 +91,12 @@ public class TypeTests
         SetName(book1, "New Name");
 
         Assert.Equal("New Name", book1.Name);
-        
+
     }
 
-    private void SetName(Book book, string name)
+    private void SetName(InMemoryBook book, string name)
     {
-       book.Name = name;
+        book.Name = name;
     }
 
 
@@ -112,9 +123,9 @@ public class TypeTests
 
 
 
-    Book GetBook(string name)
+    InMemoryBook GetBook(string name)
     {
-        return new Book(name);
+        return new InMemoryBook(name);
     }
 
     public void StringsBehaveLikeValueTypes()
